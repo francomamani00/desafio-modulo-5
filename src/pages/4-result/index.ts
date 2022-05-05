@@ -139,7 +139,7 @@ export function initResult(params) {
   div.querySelector(".my-play").appendChild(myPlay);
   div.appendChild(style);
   div.querySelector(".button-return-to-play").addEventListener("click", () => {
-    params.goTo("/instructions");
+    params.goTo("/desafio-modulo-5/instructions");
   });
 
   return div;

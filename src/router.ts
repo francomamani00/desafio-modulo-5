@@ -3,10 +3,10 @@ import { initInstructionsPage } from "./pages/2-instructions";
 import { initGame } from "./pages/3-game";
 import { initResult } from "./pages/4-result";
 const routes = [
-  { path: /\/welcome/, component: initWelcomePage },
-  { path: /\/instructions/, component: initInstructionsPage },
-  { path: /\/game/, component: initGame },
-  { path: /\/result/, component: initResult },
+  { path: /\/desafio-modulo-5\/welcome/, component: initWelcomePage },
+  { path: /\/desafio-modulo-5\/instructions/, component: initInstructionsPage },
+  { path: /\/desafio-modulo-5\/game/, component: initGame },
+  { path: /\/desafio-modulo-5\/result/, component: initResult },
 ];
 
 export function initRouter(container: Element) {
@@ -27,11 +27,11 @@ export function initRouter(container: Element) {
     }
   }
 
-  if (location.pathname == "/") {
-    goTo("/welcome");
-  } else {
-    handleRoute(location.pathname);
-  }
+  // if (location.pathname == "/") {
+  //   goTo("/welcome");
+  // } else {
+  //   handleRoute(location.pathname);
+  // }
   if (location.host.includes("github.io") || "/") {
     goTo("/desafio-modulo-5/welcome");
   } else {

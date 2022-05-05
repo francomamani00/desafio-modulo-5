@@ -76,7 +76,7 @@ export function initInstructionsPage(params) {
   `;
   div.appendChild(style);
   div.querySelector(".instructions__button").addEventListener("click", () => {
-    params.goTo("/game");
+    params.goTo("/desafio-modulo-5/game");
   });
   return div;
 }

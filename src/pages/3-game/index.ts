@@ -84,7 +84,7 @@ export function initGame(params) {
       if (type == "tijera") {
         state.setMove("tijera");
       }
-      params.goTo("/result");
+      params.goTo("/desafio-modulo-5/result");
     });
   });
   contador.addEventListener("change", (e: any) => {
@@ -93,7 +93,7 @@ export function initGame(params) {
       const type = hand.getAttribute("tipo");
 
       if (boolean == false) {
-        params.goTo("/instructions");
+        params.goTo("/desafio-modulo-5/instructions");
       }
     });
   });

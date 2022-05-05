@@ -73,7 +73,7 @@ export function initWelcomePage(params) {
   `;
   div.appendChild(style);
   div.querySelector(".button").addEventListener("click", () => {
-    params.goTo("/instructions");
+    params.goTo("/desafio-modulo-5/instructions");
   });
   return div;
 }
