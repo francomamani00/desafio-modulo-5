@@ -12,7 +12,7 @@ export function initCustomText() {
       style.innerHTML = `
         .title{
             color: rgba(0, 144, 72, 1);
-            padding: 20px;
+            padding: 0px;
             text-align: center;
             font-family: var(--font-button);
             font-size: 75px;

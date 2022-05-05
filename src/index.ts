@@ -4,6 +4,8 @@ import { initCustomText } from "./components/text";
 import { initPiedra } from "./components/piedra";
 import { initPapel } from "./components/papel";
 import { initTijera } from "./components/tijera";
+import { initContadorComp } from "./components/count-down";
+import { initScore } from "./components/score";
 import "./state";
 
 (function () {
@@ -12,6 +14,8 @@ import "./state";
   initPiedra();
   initPapel();
   initTijera();
+  initContadorComp();
+  initScore();
   const root = document.querySelector(".root");
   initRouter(root);
 })();

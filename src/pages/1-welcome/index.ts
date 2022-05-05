@@ -39,8 +39,8 @@ export function initWelcomePage(params) {
       justify-content:space-between;
       align-items:center;
       padding-top:100px;
-      padding-left: 10px;
-      padding-right:10px;
+      padding-left: 20px;
+      padding-right:20px;
     }
     .container-ppt{
       display:flex;
@@ -54,8 +54,13 @@ export function initWelcomePage(params) {
     .elementos {
       padding: 10px;
       position: relative;
-      top:56px;
+      top:25px;
       width: fit-content;
+    }
+    @media (min-width:512px){
+      .elementos{
+        top:71px;
+      }
     }
     .container-title{
         margin-top:50px;

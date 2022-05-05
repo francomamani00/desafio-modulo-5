@@ -1,10 +1,12 @@
 import { initWelcomePage } from "./pages/1-welcome";
 import { initInstructionsPage } from "./pages/2-instructions";
+import { initGame } from "./pages/3-game";
+import { initResult } from "./pages/4-result";
 const routes = [
   { path: /\/welcome/, component: initWelcomePage },
   { path: /\/instructions/, component: initInstructionsPage },
-  //   { path: /\/desafio-modulo-5\/game/, component: initGamePage },
-  //   { path: /\/desafio-modulo-5\/results/, component: initResultsPage },
+  { path: /\/game/, component: initGame },
+  { path: /\/result/, component: initResult },
 ];
 
 export function initRouter(container: Element) {
@@ -15,7 +17,7 @@ export function initRouter(container: Element) {
   function handleRoute(route) {
     console.log("el handle recibio una nueva ruta", route);
     for (const r of routes) {
-      if (r.path.test) {
+      if (r.path.test(route)) {
         const el = r.component({ goTo: goTo });
         if (container.firstChild) {
           container.firstChild.remove();

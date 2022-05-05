@@ -23,6 +23,7 @@ export function initButton() {
             font-size: 45px;
             font-family: var(--font-button);
             text-align:center;
+            cursor:pointer;
         }
       
       `;
