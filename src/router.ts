@@ -32,7 +32,11 @@ export function initRouter(container: Element) {
   } else {
     handleRoute(location.pathname);
   }
-
+  if (location.host.includes("github.io") || "/") {
+    goTo("/desafio-modulo-5/welcome");
+  } else {
+    handleRoute(location.pathname);
+  }
   window.onpopstate = function () {
     handleRoute(location.pathname);
   };
