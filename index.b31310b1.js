@@ -487,19 +487,19 @@ var _3Game = require("./pages/3-game");
 var _4Result = require("./pages/4-result");
 const routes = [
     {
-        path: /\/welcome/,
+        path: /\/desafio-modulo-5\/welcome/,
         component: _1Welcome.initWelcomePage
     },
     {
-        path: /\/instructions/,
+        path: /\/desafio-modulo-5\/instructions/,
         component: _2Instructions.initInstructionsPage
     },
     {
-        path: /\/game/,
+        path: /\/desafio-modulo-5\/game/,
         component: _3Game.initGame
     },
     {
-        path: /\/result/,
+        path: /\/desafio-modulo-5\/result/,
         component: _4Result.initResult
     }, 
 ];
@@ -519,8 +519,6 @@ function initRouter(container) {
             container.appendChild(el);
         }
     }
-    if (location.pathname == "/") goTo("/welcome");
-    else handleRoute(location.pathname);
     location.host.includes("github.io") || "/";
     goTo("/desafio-modulo-5/welcome");
     window.onpopstate = function() {
@@ -541,7 +539,7 @@ function initWelcomePage(params) {
     style.innerHTML = `\n    *{\n      box-sizing:border-box;\n    }\n    body{\n      margin:0;\n    }\n    .section{\n      background-image:url(${imgFondo});\n      display:flex;\n      width:100%;\n      height:100vh;\n      flex-direction:column;\n      justify-content:space-between;\n      align-items:center;\n      padding-top:100px;\n      padding-left: 20px;\n      padding-right:20px;\n    }\n    .container-ppt{\n      display:flex;\n      gap:40px;\n      flex-direction:row;\n      justify-content:space-evenly;\n      overflow:hidden;\n      \n  \n    }\n    .elementos {\n      padding: 10px;\n      position: relative;\n      top:25px;\n      width: fit-content;\n    }\n    @media (min-width:512px){\n      .elementos{\n        top:71px;\n      }\n    }\n    .container-title{\n        margin-top:50px;\n    }\n    .container-button{\n      text-align:center;\n      width:100%;\n      margin-top:50px;\n    }\n  `;
     div.appendChild(style);
     div.querySelector(".button").addEventListener("click", ()=>{
-        params.goTo("/instructions");
+        params.goTo("/desafio-modulo-5/instructions");
     });
     return div;
 }
@@ -629,7 +627,7 @@ function initInstructionsPage(params) {
     style.innerHTML = `\n    *{\n      box-sizing:border-box;\n    }\n    body{\n      margin:0;\n    }\n    .instructions__section{\n      background-image:url(${imgFondo});\n      display:flex;\n      width:100%;\n      height:100vh;\n      flex-direction:column;\n      justify-content:space-between;\n      align-items:center;\n      padding-top:100px;\n      padding-left: 20px;\n      padding-right:20px;\n    }\n    .instructions__container-ppt{\n      display:flex;\n      gap:40px;\n      flex-direction:row;\n      justify-content:space-evenly;\n      overflow:hidden;\n      \n  \n    }\n    .instructions__elementos {\n      padding: 10px;\n      position: relative;\n      top:20px;\n      width: fit-content;\n    }\n    @media (min-width: 556px){\n        .instructions__elementos {\n            top:64px;\n          }\n    }\n    .instructions__container-title{\n        padding:20px;\n        max-width:650px;\n        margin-top:50px;\n    }\n    .instructions__container-button{\n      text-align:center;\n      width:100%;\n      margin-top:50px;\n    }\n  `;
     div.appendChild(style);
     div.querySelector(".instructions__button").addEventListener("click", ()=>{
-        params.goTo("/game");
+        params.goTo("/desafio-modulo-5/game");
     });
     return div;
 }
@@ -670,14 +668,14 @@ function initGame(params) {
             if (type == "piedra") _state.state.setMove("piedra");
             if (type == "papel") _state.state.setMove("papel");
             if (type == "tijera") _state.state.setMove("tijera");
-            params.goTo("/result");
+            params.goTo("/desafio-modulo-5/result");
         });
     });
     contador.addEventListener("change", (e)=>{
         // console.log("entro al if", e);
         handComponents.forEach((hand)=>{
             const type = hand.getAttribute("tipo");
-            if (boolean == false) params.goTo("/instructions");
+            if (boolean == false) params.goTo("/desafio-modulo-5/instructions");
         });
     });
     const currentState = _state.state.getState();
@@ -827,7 +825,7 @@ function initResult(params) {
     div.querySelector(".my-play").appendChild(myPlay);
     div.appendChild(style);
     div.querySelector(".button-return-to-play").addEventListener("click", ()=>{
-        params.goTo("/instructions");
+        params.goTo("/desafio-modulo-5/instructions");
     });
     return div;
 }
