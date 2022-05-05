@@ -476,7 +476,220 @@ var _state = require("./state");
     _router.initRouter(root);
 })();
 
-},{"./state":"28XHA","./router":"b2iia","./components/button":"3uBrB","./components/text":"8YEyP","./components/piedra":"2SW73","./components/papel":"ewwSI","./components/tijera":"5n8c0","./components/count-down":"aLvvz","./components/score":"lD8NT"}],"28XHA":[function(require,module,exports) {
+},{"./router":"b2iia","./components/button":"3uBrB","./components/text":"8YEyP","./components/piedra":"2SW73","./components/papel":"ewwSI","./components/tijera":"5n8c0","./components/count-down":"aLvvz","./components/score":"lD8NT","./state":"28XHA"}],"b2iia":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initRouter", ()=>initRouter
+);
+var _1Welcome = require("./pages/1-welcome");
+var _2Instructions = require("./pages/2-instructions");
+var _3Game = require("./pages/3-game");
+var _4Result = require("./pages/4-result");
+const routes = [
+    {
+        path: /\/welcome/,
+        component: _1Welcome.initWelcomePage
+    },
+    {
+        path: /\/instructions/,
+        component: _2Instructions.initInstructionsPage
+    },
+    {
+        path: /\/game/,
+        component: _3Game.initGame
+    },
+    {
+        path: /\/result/,
+        component: _4Result.initResult
+    }, 
+];
+function initRouter(container) {
+    function goTo(path) {
+        history.pushState({
+        }, "", path);
+        handleRoute(path);
+    }
+    function handleRoute(route) {
+        console.log("el handle recibio una nueva ruta", route);
+        for (const r of routes)if (r.path.test(route)) {
+            const el = r.component({
+                goTo: goTo
+            });
+            if (container.firstChild) container.firstChild.remove();
+            container.appendChild(el);
+        }
+    }
+    if (location.pathname == "/") goTo("/welcome");
+    else handleRoute(location.pathname);
+    location.host.includes("github.io") || "/";
+    goTo("/desafio-modulo-5/welcome");
+    window.onpopstate = function() {
+        handleRoute(location.pathname);
+    };
+}
+
+},{"./pages/1-welcome":"1aoDa","./pages/2-instructions":"8jRO1","./pages/3-game":"cLCHE","./pages/4-result":"2U70V","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"1aoDa":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initWelcomePage", ()=>initWelcomePage
+);
+const imgFondo = require("url:../../../src/img/fondo.png");
+function initWelcomePage(params) {
+    const div = document.createElement("div");
+    div.innerHTML = `\n    <section class="section">\n      <div class="container-title">\n        <custom-text variant="title">Piedra, Papel o Tijera</custom-text>\n      </div>\n      <div class="container-button">\n          <button-comp class="button">Comenzar</button-comp>\n      </div>\n\n      <div class="container-ppt">\n          <custom-piedra variant="small" class="elementos"></custom-piedra>\n          <custom-papel variant="small" class="elementos"></custom-papel>\n          <custom-tijera variant="small" class="elementos"></custom-tijera>\n\n      </div>\n\n    </section>\n  \n  `;
+    const style = document.createElement("style");
+    style.innerHTML = `\n    *{\n      box-sizing:border-box;\n    }\n    body{\n      margin:0;\n    }\n    .section{\n      background-image:url(${imgFondo});\n      display:flex;\n      width:100%;\n      height:100vh;\n      flex-direction:column;\n      justify-content:space-between;\n      align-items:center;\n      padding-top:100px;\n      padding-left: 20px;\n      padding-right:20px;\n    }\n    .container-ppt{\n      display:flex;\n      gap:40px;\n      flex-direction:row;\n      justify-content:space-evenly;\n      overflow:hidden;\n      \n  \n    }\n    .elementos {\n      padding: 10px;\n      position: relative;\n      top:25px;\n      width: fit-content;\n    }\n    @media (min-width:512px){\n      .elementos{\n        top:71px;\n      }\n    }\n    .container-title{\n        margin-top:50px;\n    }\n    .container-button{\n      text-align:center;\n      width:100%;\n      margin-top:50px;\n    }\n  `;
+    div.appendChild(style);
+    div.querySelector(".button").addEventListener("click", ()=>{
+        params.goTo("/instructions");
+    });
+    return div;
+}
+
+},{"url:../../../src/img/fondo.png":"9cqG5","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9cqG5":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('Z8Pbo') + "fondo.4c81efc4.png";
+
+},{"./helpers/bundle-url":"8YnfL"}],"8YnfL":[function(require,module,exports) {
+"use strict";
+var bundleURL = {
+};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"JacNc":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule') return;
+        // Skip duplicate re-exports when they have the same value.
+        if (key in dest && dest[key] === source[key]) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"8jRO1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initInstructionsPage", ()=>initInstructionsPage
+);
+const imgFondo = require("url:../../../src/img/fondo.png");
+function initInstructionsPage(params) {
+    const div = document.createElement("div");
+    div.innerHTML = `\n    <section class="instructions__section">\n      <div class="instructions__container-title">\n        <custom-text variant="subtitle">Presioná jugar\n        y elegí: piedra, papel o tijera antes de que pasen los 3 segundos.</custom-text>\n      </div>\n      <div class="instructions__container-button">\n          <button-comp class="instructions__button">Jugar</button-comp>\n      </div>\n\n      <div class="instructions__container-ppt">\n          <custom-piedra variant="small" class="instructions__elementos"></custom-piedra>\n          <custom-papel variant="small" class="instructions__elementos"></custom-papel>\n          <custom-tijera variant="small" class="instructions__elementos"></custom-tijera>\n\n      </div>\n\n    </section>\n  \n  `;
+    const style = document.createElement("style");
+    style.innerHTML = `\n    *{\n      box-sizing:border-box;\n    }\n    body{\n      margin:0;\n    }\n    .instructions__section{\n      background-image:url(${imgFondo});\n      display:flex;\n      width:100%;\n      height:100vh;\n      flex-direction:column;\n      justify-content:space-between;\n      align-items:center;\n      padding-top:100px;\n      padding-left: 20px;\n      padding-right:20px;\n    }\n    .instructions__container-ppt{\n      display:flex;\n      gap:40px;\n      flex-direction:row;\n      justify-content:space-evenly;\n      overflow:hidden;\n      \n  \n    }\n    .instructions__elementos {\n      padding: 10px;\n      position: relative;\n      top:20px;\n      width: fit-content;\n    }\n    @media (min-width: 556px){\n        .instructions__elementos {\n            top:64px;\n          }\n    }\n    .instructions__container-title{\n        padding:20px;\n        max-width:650px;\n        margin-top:50px;\n    }\n    .instructions__container-button{\n      text-align:center;\n      width:100%;\n      margin-top:50px;\n    }\n  `;
+    div.appendChild(style);
+    div.querySelector(".instructions__button").addEventListener("click", ()=>{
+        params.goTo("/game");
+    });
+    return div;
+}
+
+},{"url:../../../src/img/fondo.png":"9cqG5","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"cLCHE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initGame", ()=>initGame
+);
+var _state = require("../../state");
+const fondo = require("url:../../../src/img/fondo.png");
+function initGame(params) {
+    const div = document.createElement("div");
+    div.innerHTML = `\n    <section class="game__section">\n        <div class="game__container-contador">\n            <contador-comp class="contador"></contador-comp>\n        </div>\n        <div class="game__container-ppt">\n            <custom-piedra tipo="piedra"variant="small" id="pointer" class="elementos"></custom-piedra>\n            <custom-papel tipo="papel" variant="small" id="pointer" class="elementos"></custom-papel>\n            <custom-tijera tipo="tijera" variant="small" id="pointer" class="elementos"></custom-tijera>\n        </div>\n    </section>\n  \n  `;
+    const style = document.createElement("style");
+    style.innerHTML = `\n    *{\n      box-sizing:border-box;\n    }\n    body{\n      margin:0;\n    }\n    .game__section{\n      background-image:url(${fondo});\n      display:flex;\n      width:100%;\n      height:100vh;\n      flex-direction:column;\n      justify-content:space-between;\n      align-items:center;\n      padding-top:100px;\n      padding-left: 20px;\n      padding-right:20px;\n    }\n    .game__container-contador{\n      \n    }\n    .game__container-ppt{\n      display:flex;\n      gap:40px;\n      flex-direction:row;\n      overflow:hidden;\n\n    }\n    .elementos{\n      position:relative;\n      top:60px;\n      cursor:pointer;\n      padding:10px;\n    }\n\n  `;
+    // console.log(state.setMove("piedra"));
+    console.log(_state.state.getState());
+    const handComponents = div.querySelectorAll(".elementos");
+    let contador = div.querySelector(".contador");
+    let boolean = false;
+    // handComponents.forEach((hand) => {
+    //   hand.addEventListener("click", (e: any) => {
+    //     boolean = true;
+    //     const evento = new CustomEvent("change", {
+    //       detail: {
+    //         myPlay: e.detail.myPlay,
+    //       },
+    //     });
+    //     state.setMove(e.detail.myPlay);
+    //     params.goTo("/result");
+    //   });
+    // });
+    handComponents.forEach((hand)=>{
+        hand.addEventListener("click", ()=>{
+            boolean = true;
+            const type = hand.getAttribute("tipo");
+            if (type == "piedra") _state.state.setMove("piedra");
+            if (type == "papel") _state.state.setMove("papel");
+            if (type == "tijera") _state.state.setMove("tijera");
+            params.goTo("/result");
+        });
+    });
+    contador.addEventListener("change", (e)=>{
+        // console.log("entro al if", e);
+        handComponents.forEach((hand)=>{
+            const type = hand.getAttribute("tipo");
+            if (boolean == false) params.goTo("/instructions");
+        });
+    });
+    const currentState = _state.state.getState();
+    const computerPlay = currentState.currentGame.computerPlay;
+    const myPlay = currentState.currentGame.myPlay;
+    const winner = _state.state.whoWins(myPlay, computerPlay);
+    console.log(winner);
+    div.appendChild(style);
+    return div;
+}
+
+},{"../../state":"28XHA","url:../../../src/img/fondo.png":"9cqG5","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"28XHA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state
@@ -562,218 +775,7 @@ const state = {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"JacNc":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule') return;
-        // Skip duplicate re-exports when they have the same value.
-        if (key in dest && dest[key] === source[key]) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"b2iia":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "initRouter", ()=>initRouter
-);
-var _1Welcome = require("./pages/1-welcome");
-var _2Instructions = require("./pages/2-instructions");
-var _3Game = require("./pages/3-game");
-var _4Result = require("./pages/4-result");
-const routes = [
-    {
-        path: /\/welcome/,
-        component: _1Welcome.initWelcomePage
-    },
-    {
-        path: /\/instructions/,
-        component: _2Instructions.initInstructionsPage
-    },
-    {
-        path: /\/game/,
-        component: _3Game.initGame
-    },
-    {
-        path: /\/result/,
-        component: _4Result.initResult
-    }, 
-];
-function initRouter(container) {
-    function goTo(path) {
-        history.pushState({
-        }, "", path);
-        handleRoute(path);
-    }
-    function handleRoute(route) {
-        console.log("el handle recibio una nueva ruta", route);
-        for (const r of routes)if (r.path.test(route)) {
-            const el = r.component({
-                goTo: goTo
-            });
-            if (container.firstChild) container.firstChild.remove();
-            container.appendChild(el);
-        }
-    }
-    if (location.pathname == "/") goTo("/welcome");
-    else handleRoute(location.pathname);
-    window.onpopstate = function() {
-        handleRoute(location.pathname);
-    };
-}
-
-},{"./pages/1-welcome":"1aoDa","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./pages/2-instructions":"8jRO1","./pages/3-game":"cLCHE","./pages/4-result":"2U70V"}],"1aoDa":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "initWelcomePage", ()=>initWelcomePage
-);
-const imgFondo = require("url:../../../src/img/fondo.png");
-function initWelcomePage(params) {
-    const div = document.createElement("div");
-    div.innerHTML = `\n    <section class="section">\n      <div class="container-title">\n        <custom-text variant="title">Piedra, Papel o Tijera</custom-text>\n      </div>\n      <div class="container-button">\n          <button-comp class="button">Comenzar</button-comp>\n      </div>\n\n      <div class="container-ppt">\n          <custom-piedra variant="small" class="elementos"></custom-piedra>\n          <custom-papel variant="small" class="elementos"></custom-papel>\n          <custom-tijera variant="small" class="elementos"></custom-tijera>\n\n      </div>\n\n    </section>\n  \n  `;
-    const style = document.createElement("style");
-    style.innerHTML = `\n    *{\n      box-sizing:border-box;\n    }\n    body{\n      margin:0;\n    }\n    .section{\n      background-image:url(${imgFondo});\n      display:flex;\n      width:100%;\n      height:100vh;\n      flex-direction:column;\n      justify-content:space-between;\n      align-items:center;\n      padding-top:100px;\n      padding-left: 20px;\n      padding-right:20px;\n    }\n    .container-ppt{\n      display:flex;\n      gap:40px;\n      flex-direction:row;\n      justify-content:space-evenly;\n      overflow:hidden;\n      \n  \n    }\n    .elementos {\n      padding: 10px;\n      position: relative;\n      top:25px;\n      width: fit-content;\n    }\n    @media (min-width:512px){\n      .elementos{\n        top:71px;\n      }\n    }\n    .container-title{\n        margin-top:50px;\n    }\n    .container-button{\n      text-align:center;\n      width:100%;\n      margin-top:50px;\n    }\n  `;
-    div.appendChild(style);
-    div.querySelector(".button").addEventListener("click", ()=>{
-        params.goTo("/instructions");
-    });
-    return div;
-}
-
-},{"url:../../../src/img/fondo.png":"9cqG5","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9cqG5":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('Z8Pbo') + "fondo.4c81efc4.png";
-
-},{"./helpers/bundle-url":"8YnfL"}],"8YnfL":[function(require,module,exports) {
-"use strict";
-var bundleURL = {
-};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"8jRO1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "initInstructionsPage", ()=>initInstructionsPage
-);
-const imgFondo = require("url:../../../src/img/fondo.png");
-function initInstructionsPage(params) {
-    const div = document.createElement("div");
-    div.innerHTML = `\n    <section class="instructions__section">\n      <div class="instructions__container-title">\n        <custom-text variant="subtitle">Presioná jugar\n        y elegí: piedra, papel o tijera antes de que pasen los 3 segundos.</custom-text>\n      </div>\n      <div class="instructions__container-button">\n          <button-comp class="instructions__button">Jugar</button-comp>\n      </div>\n\n      <div class="instructions__container-ppt">\n          <custom-piedra variant="small" class="instructions__elementos"></custom-piedra>\n          <custom-papel variant="small" class="instructions__elementos"></custom-papel>\n          <custom-tijera variant="small" class="instructions__elementos"></custom-tijera>\n\n      </div>\n\n    </section>\n  \n  `;
-    const style = document.createElement("style");
-    style.innerHTML = `\n    *{\n      box-sizing:border-box;\n    }\n    body{\n      margin:0;\n    }\n    .instructions__section{\n      background-image:url(${imgFondo});\n      display:flex;\n      width:100%;\n      height:100vh;\n      flex-direction:column;\n      justify-content:space-between;\n      align-items:center;\n      padding-top:100px;\n      padding-left: 20px;\n      padding-right:20px;\n    }\n    .instructions__container-ppt{\n      display:flex;\n      gap:40px;\n      flex-direction:row;\n      justify-content:space-evenly;\n      overflow:hidden;\n      \n  \n    }\n    .instructions__elementos {\n      padding: 10px;\n      position: relative;\n      top:20px;\n      width: fit-content;\n    }\n    @media (min-width: 556px){\n        .instructions__elementos {\n            top:64px;\n          }\n    }\n    .instructions__container-title{\n        padding:20px;\n        max-width:650px;\n        margin-top:50px;\n    }\n    .instructions__container-button{\n      text-align:center;\n      width:100%;\n      margin-top:50px;\n    }\n  `;
-    div.appendChild(style);
-    div.querySelector(".instructions__button").addEventListener("click", ()=>{
-        params.goTo("/game");
-    });
-    return div;
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","url:../../../src/img/fondo.png":"9cqG5"}],"cLCHE":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "initGame", ()=>initGame
-);
-var _state = require("../../state");
-const fondo = require("url:../../../src/img/fondo.png");
-function initGame(params) {
-    const div = document.createElement("div");
-    div.innerHTML = `\n    <section class="game__section">\n        <div class="game__container-contador">\n            <contador-comp class="contador"></contador-comp>\n        </div>\n        <div class="game__container-ppt">\n            <custom-piedra tipo="piedra"variant="small" id="pointer" class="elementos"></custom-piedra>\n            <custom-papel tipo="papel" variant="small" id="pointer" class="elementos"></custom-papel>\n            <custom-tijera tipo="tijera" variant="small" id="pointer" class="elementos"></custom-tijera>\n        </div>\n    </section>\n  \n  `;
-    const style = document.createElement("style");
-    style.innerHTML = `\n    *{\n      box-sizing:border-box;\n    }\n    body{\n      margin:0;\n    }\n    .game__section{\n      background-image:url(${fondo});\n      display:flex;\n      width:100%;\n      height:100vh;\n      flex-direction:column;\n      justify-content:space-between;\n      align-items:center;\n      padding-top:100px;\n      padding-left: 20px;\n      padding-right:20px;\n    }\n    .game__container-contador{\n      \n    }\n    .game__container-ppt{\n      display:flex;\n      gap:40px;\n      flex-direction:row;\n      overflow:hidden;\n\n    }\n    .elementos{\n      position:relative;\n      top:60px;\n      cursor:pointer;\n      padding:10px;\n    }\n\n  `;
-    // console.log(state.setMove("piedra"));
-    console.log(_state.state.getState());
-    const handComponents = div.querySelectorAll(".elementos");
-    let contador = div.querySelector(".contador");
-    let boolean = false;
-    // handComponents.forEach((hand) => {
-    //   hand.addEventListener("click", (e: any) => {
-    //     boolean = true;
-    //     const evento = new CustomEvent("change", {
-    //       detail: {
-    //         myPlay: e.detail.myPlay,
-    //       },
-    //     });
-    //     state.setMove(e.detail.myPlay);
-    //     params.goTo("/result");
-    //   });
-    // });
-    handComponents.forEach((hand)=>{
-        hand.addEventListener("click", ()=>{
-            boolean = true;
-            const type = hand.getAttribute("tipo");
-            if (type == "piedra") _state.state.setMove("piedra");
-            if (type == "papel") _state.state.setMove("papel");
-            if (type == "tijera") _state.state.setMove("tijera");
-            params.goTo("/result");
-        });
-    });
-    contador.addEventListener("change", (e)=>{
-        // console.log("entro al if", e);
-        handComponents.forEach((hand)=>{
-            const type = hand.getAttribute("tipo");
-            if (boolean == false) params.goTo("/instructions");
-        });
-    });
-    const currentState = _state.state.getState();
-    const computerPlay = currentState.currentGame.computerPlay;
-    const myPlay = currentState.currentGame.myPlay;
-    const winner = _state.state.whoWins(myPlay, computerPlay);
-    console.log(winner);
-    div.appendChild(style);
-    return div;
-}
-
-},{"url:../../../src/img/fondo.png":"9cqG5","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../state":"28XHA"}],"2U70V":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"2U70V":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initResult", ()=>initResult
@@ -830,7 +832,7 @@ function initResult(params) {
     return div;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../state":"28XHA","url:../../../src/img/fondo.png":"9cqG5","url:../../../src/img/ganaste.png":"jMfYt","url:../../../src/img/perdiste.png":"32d2U","url:../../../src/img/empate.png":"iORtD"}],"jMfYt":[function(require,module,exports) {
+},{"../../state":"28XHA","url:../../../src/img/fondo.png":"9cqG5","url:../../../src/img/ganaste.png":"jMfYt","url:../../../src/img/perdiste.png":"32d2U","url:../../../src/img/empate.png":"iORtD","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jMfYt":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('Z8Pbo') + "ganaste.f9f1f8cd.png";
 
 },{"./helpers/bundle-url":"8YnfL"}],"32d2U":[function(require,module,exports) {
